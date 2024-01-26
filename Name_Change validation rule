@@ -1,0 +1,24 @@
+IF(
+    PRIORVALUE(License_Plate__c) = License_Plate__c,
+    IF(
+        ISBLANK(Internal_Vehicle_Number__c),
+        IF(
+            Name <> License_Plate__c,
+            IF(
+               PRIORVALUE(Internal_Vehicle_Number__c) = Internal_Vehicle_Number__c,
+	    true, 
+            false),
+            false
+        ),
+        IF(
+            PRIORVALUE(Internal_Vehicle_Number__c) = Internal_Vehicle_Number__c,
+            IF(
+                Name <> Internal_Vehicle_Number__c,
+                true,
+                false
+            ),
+            false
+        )
+    ),
+    false
+)
