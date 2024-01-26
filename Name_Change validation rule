@@ -22,3 +22,7 @@ IF(
     ),
     false
 )
+// This validation rule lets a field have its value changed so that automation can change the record name to the field but it doesn't let a user change the Name field manually. 
+// It first checks if the old and the new value match, if they don't the validation doesnt throw an error allowing the automation to run, if they do match the validation rule
+// then checks if the Internal_Vehicle_Number__c field is blank or not, if it is it doesn't throw an error and lets the automation run setting the name, if there is a value 
+// the validation throws an error if the name tries to change.
