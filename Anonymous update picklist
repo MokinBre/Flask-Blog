@@ -1,0 +1,21 @@
+// Query Accounts where the Certified_For__c field is not empty
+List<Account> accountsToUpdate = [SELECT Id, Certified_For__c FROM Account WHERE Certified_For__c != null];
+
+// Loop through each Account record
+for(Account acc : accountsToUpdate) {
+    // Check if Certified_For__c is not null or empty
+    if(String.isNotBlank(acc.Certified_For__c)) {
+        // Split the Certified_For__c text field value based on ':' delimiter
+        List<String> picklistValues = acc.Certified_For__c.split(':');
+        
+        // Prepare the multi-select picklist value by joining the list with a semi-colon
+        // Salesforce uses semi-colon ';' as the delimiter for multi-select picklists
+        String multiSelectValue = String.join(picklistValues, ';');
+        
+        // Update the Certified_For_Picklist__c field with the new value
+        acc.Certified_For_Picklist__c = multiSelectValue;
+    }
+}
+
+// Perform a DML update on the records
+update accountsToUpdate;
